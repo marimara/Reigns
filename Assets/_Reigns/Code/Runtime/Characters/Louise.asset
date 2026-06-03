@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Louise
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
   CharacterName: Louise
-  Portrait: {fileID: 21300000, guid: 4fe4f01a6482c4f4090d6c2d1208b40c, type: 3}
+  Portrait: {fileID: 21300000, guid: 07f851a50a92a0e48a440e907b537da9, type: 3}
   Strength: 2
   Agility: 5
   Magic: 0

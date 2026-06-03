@@ -45,4 +45,10 @@ public class CharacterPosterUI : MonoBehaviour
         intellectRow.SetValue(characterData.Intellect);
         
     }
+    [Button]
+    public void SetCharacter(CharacterData data)
+    {
+        characterData = data;
+        Refresh();
+    }
 }
