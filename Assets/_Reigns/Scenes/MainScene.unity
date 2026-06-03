@@ -267,6 +267,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7722070698211741429, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
   m_PrefabInstance: {fileID: 7603339552951654451}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &199718602 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2371040965420169099, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+  m_PrefabInstance: {fileID: 7603339552951654451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1e3d202ffa0d854e8dcd41268a3b1b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionPosterUI
 --- !u!1 &291441414
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,11 +324,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MissionTester
   Character: {fileID: 11400000, guid: 053201ff093335040bdde0adb27db5f1, type: 2}
   Mission: {fileID: 11400000, guid: 77e2cf9a9793c4848b72248e177eb916, type: 2}
+--- !u!114 &312708146 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2604309958421918645, guid: d549e6df80eeacf478cb6b60ea72072f, type: 3}
+  m_PrefabInstance: {fileID: 2689799884317301476}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a16248995ef58b468d6a1fd4c9587c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSlotUI
 --- !u!224 &399394038 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1782480876141827232, guid: d549e6df80eeacf478cb6b60ea72072f, type: 3}
   m_PrefabInstance: {fileID: 2689799884317301476}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &429272526
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 429272527}
+  - component: {fileID: 429272528}
+  m_Layer: 0
+  m_Name: GuildManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &429272527
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429272526}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 892287720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &429272528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 429272526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f9b980c03106b46821fcf44c0d0d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GuildManager
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,6 +856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 709229388}
+  - component: {fileID: 709229389}
   m_Layer: 5
   m_Name: MissionBoard
   m_TagString: Untagged
@@ -819,6 +886,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &709229389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709229387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b2fce2385aa404f803cc71f5ff15c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MissionBoardUI
+  missionPoster: {fileID: 199718602}
+  characterSlots:
+  - {fileID: 312708146}
 --- !u!1 &791755858
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,6 +1144,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 291441415}
+  - {fileID: 429272527}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900329456
@@ -1717,6 +1800,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 852585023}
     m_Modifications:
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 709229389}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSendMissionClicked
+      objectReference: {fileID: 0}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MissionBoardUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 225008685486383829, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 484419751343122040, guid: 7b9443743b4989e4db45aca91e6d8870, type: 3}
       propertyPath: m_text
       value: 'The boars are back. Again.

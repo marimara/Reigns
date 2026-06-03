@@ -31,7 +31,7 @@ public static class MissionResolver
         return Mathf.Clamp01(
             (float)characterStat / requiredStat);
     }
-    private static float CalculateSuccessChance(
+    public static float CalculateSuccessChance(
         CharacterData character,
         MissionData mission)
     {

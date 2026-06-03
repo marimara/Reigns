@@ -8,6 +8,7 @@ public class MissionPosterUI : MonoBehaviour
     [Header("Data")]
     [InlineEditor]
     [SerializeField] private MissionData missionData;
+    public MissionData MissionData => missionData;
 
     [Header("UI")]
     [SerializeField] private TMP_Text missionNameText;
