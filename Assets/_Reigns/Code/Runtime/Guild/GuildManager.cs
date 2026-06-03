@@ -53,4 +53,57 @@ public class GuildManager : MonoBehaviour
 
         return false;
     }
+    [Button(ButtonSizes.Large)]
+    public void AdvanceDay()
+    {
+        CurrentDay++;
+
+        Debug.Log(
+            $"Advanced to Day {CurrentDay}");
+        
+        List<MissionAssignment> completedMissions =
+            new();
+
+        foreach (MissionAssignment mission
+                 in activeMissions)
+        {
+            mission.DaysRemaining--;
+
+            Debug.Log(
+                $"{mission.Character.CharacterName} | " +
+                $"{mission.Mission.MissionName} | " +
+                $"{mission.DaysRemaining} days remaining");
+
+            if (mission.DaysRemaining <= 0 &&
+                !mission.Finished)
+            {
+                ResolveMission(mission);
+
+                completedMissions.Add(mission);
+            }
+        }
+        foreach (MissionAssignment mission
+                 in completedMissions)
+        {
+            activeMissions.Remove(mission);
+
+            Debug.Log(
+                $"{mission.Character.CharacterName} returned from mission");
+        }
+    }
+    private void ResolveMission(
+        MissionAssignment mission)
+    {
+        float roll = Random.value;
+
+        mission.WasSuccessful =
+            roll <= mission.SuccessChance;
+
+        mission.Finished = true;
+
+        Debug.Log(
+            $"{mission.Character.CharacterName} | " +
+            $"{mission.Mission.MissionName} | " +
+            $"Success: {mission.WasSuccessful}");
+    }
 }

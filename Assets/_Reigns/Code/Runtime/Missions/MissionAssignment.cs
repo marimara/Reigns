@@ -8,6 +8,8 @@ public class MissionAssignment
     public float SuccessChance;
 
     public bool Finished;
+    
+    public bool WasSuccessful;
 
     public MissionAssignment(
         CharacterData character,
