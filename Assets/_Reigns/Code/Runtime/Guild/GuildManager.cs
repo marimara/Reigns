@@ -42,4 +42,15 @@ public class GuildManager : MonoBehaviour
     {
         activeMissions.Add(assignment);
     }
+    public bool IsCharacterBusy(
+        CharacterData character)
+    {
+        foreach (MissionAssignment mission in activeMissions)
+        {
+            if (mission.Character == character)
+                return true;
+        }
+
+        return false;
+    }
 }

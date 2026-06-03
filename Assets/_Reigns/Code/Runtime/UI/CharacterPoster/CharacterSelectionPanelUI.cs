@@ -62,8 +62,12 @@ public class CharacterSelectionPanelUI : MonoBehaviour
 
         foreach (CharacterData character in availableCharacters)
         {
+            if (GuildManager.Instance.IsCharacterBusy(character))
+                continue;
+
             CharacterButtonUI button =
-                Instantiate(characterButtonPrefab,
+                Instantiate(
+                    characterButtonPrefab,
                     characterListParent);
 
             button.Setup(character);
