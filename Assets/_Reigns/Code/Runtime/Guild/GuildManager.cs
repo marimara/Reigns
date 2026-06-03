@@ -18,9 +18,15 @@ public class GuildManager : MonoBehaviour
     [Title("Active Missions")]
     [ShowInInspector, ReadOnly]
     private List<MissionAssignment> activeMissions = new();
+    
+    [Title("Completed Missions")]
+    [ShowInInspector, ReadOnly]
+    private List<MissionAssignment> completedMissions = new();
 
     public IReadOnlyList<MissionAssignment> ActiveMissions
         => activeMissions;
+    public IReadOnlyList<MissionAssignment> CompletedMissions
+        => completedMissions;
 
     private void Awake()
     {
@@ -68,14 +74,25 @@ public class GuildManager : MonoBehaviour
 
         mission.Finished = true;
 
+        mission.GoldEarned =
+            mission.WasSuccessful
+                ? mission.Mission.GoldReward
+                : 0;
+
+        if (mission.WasSuccessful)
+        {
+            Gold += mission.GoldEarned;
+        }
+
         Debug.Log(
             $"{mission.Character.CharacterName} | " +
             $"{mission.Mission.MissionName} | " +
-            $"Success: {mission.WasSuccessful}");
+            $"Success: {mission.WasSuccessful} | " +
+            $"Gold Earned: {mission.GoldEarned}");
     }
     private void HandleDayAdvanced()
     {
-        List<MissionAssignment> completedMissions =
+        List<MissionAssignment> missionsToRemove =
             new();
 
         foreach (MissionAssignment mission
@@ -93,14 +110,16 @@ public class GuildManager : MonoBehaviour
             {
                 ResolveMission(mission);
 
-                completedMissions.Add(mission);
+                missionsToRemove.Add(mission);
             }
         }
 
         foreach (MissionAssignment mission
-                 in completedMissions)
+                 in missionsToRemove)
         {
             activeMissions.Remove(mission);
+
+            completedMissions.Add(mission);
 
             Debug.Log(
                 $"{mission.Character.CharacterName} returned from mission");
