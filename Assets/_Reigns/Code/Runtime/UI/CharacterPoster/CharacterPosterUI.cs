@@ -19,6 +19,7 @@ public class CharacterPosterUI : MonoBehaviour
     [SerializeField] private StatRowUI defenseRow;
     [SerializeField] private StatRowUI sanityRow;
     [SerializeField] private StatRowUI charismaRow;
+    [SerializeField] private StatRowUI intellectRow;
     
 
     private void Start()
@@ -41,6 +42,7 @@ public class CharacterPosterUI : MonoBehaviour
         defenseRow.SetValue(characterData.Defense);
         sanityRow.SetValue(characterData.Sanity);
         charismaRow.SetValue(characterData.Charisma);
+        intellectRow.SetValue(characterData.Intellect);
         
     }
 }

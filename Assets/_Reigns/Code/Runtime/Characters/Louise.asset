@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e054d832bebbd774ab2ea1ccc7ff24a2, type: 3}
-  m_Name: Alice
+  m_Name: Louise
   m_EditorClassIdentifier: Assembly-CSharp::CharacterData
-  CharacterName: Alice
-  Portrait: {fileID: 21300000, guid: 7756547f64d20ce48beb0df57fd104a7, type: 3}
-  Strength: 8
-  Agility: 3
-  Magic: 1
-  Defense: 7
-  Charisma: 2
-  Intellect: 6
-  Sanity: 3
+  CharacterName: Louise
+  Portrait: {fileID: 21300000, guid: 4fe4f01a6482c4f4090d6c2d1208b40c, type: 3}
+  Strength: 2
+  Agility: 5
+  Magic: 0
+  Defense: 2
+  Charisma: 6
+  Intellect: 10
+  Sanity: 5

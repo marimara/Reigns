@@ -31,6 +31,10 @@ public class CharacterData : ScriptableObject
     [Range(0, 10)]
     public int Charisma;
 
+    [BoxGroup("Stats")] 
+    [Range(0, 10)] 
+    public int Intellect;
+
     [BoxGroup("Stats")]
     [Range(0, 10)]
     public int Sanity;
