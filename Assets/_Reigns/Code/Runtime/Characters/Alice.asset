@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e054d832bebbd774ab2ea1ccc7ff24a2, type: 3}
+  m_Name: Alice
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  CharacterName: Alice
+  Portrait: {fileID: 21300000, guid: 7756547f64d20ce48beb0df57fd104a7, type: 3}
+  Strength: 8
+  Agility: 4
+  Magic: 2
+  Defense: 8
+  Charisma: 4
+  Sanity: 5
