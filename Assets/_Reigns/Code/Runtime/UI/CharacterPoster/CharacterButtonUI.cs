@@ -22,6 +22,7 @@ public class CharacterButtonUI : MonoBehaviour
 
     public void OnClicked()
     {
-        Debug.Log(characterData.CharacterName);
+        CharacterSelectionPanelUI.Instance
+            .SelectCharacter(characterData);
     }
 }

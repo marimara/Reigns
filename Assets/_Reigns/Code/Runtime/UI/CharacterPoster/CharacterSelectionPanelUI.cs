@@ -7,6 +7,11 @@ public class CharacterSelectionPanelUI : MonoBehaviour
     [Title("References")]
     [SerializeField] private CanvasGroup canvasGroup;
     
+    [SerializeField] private CharacterButtonUI characterButtonPrefab;
+    [SerializeField] private Transform characterListParent;
+
+    [SerializeField] private CharacterData[] availableCharacters;
+    
     public static CharacterSelectionPanelUI Instance { get; private set; }
 
     [ShowInInspector, ReadOnly]
@@ -24,6 +29,8 @@ public class CharacterSelectionPanelUI : MonoBehaviour
     public void Open(CharacterSlotUI slot)
     {
         currentSlot = slot;
+
+        BuildList();
 
         canvasGroup.DOKill();
 
@@ -45,5 +52,30 @@ public class CharacterSelectionPanelUI : MonoBehaviour
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
             });
+    }
+    private void BuildList()
+    {
+        foreach (Transform child in characterListParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (CharacterData character in availableCharacters)
+        {
+            CharacterButtonUI button =
+                Instantiate(characterButtonPrefab,
+                    characterListParent);
+
+            button.Setup(character);
+        }
+    }
+    public void SelectCharacter(CharacterData character)
+    {
+        if (currentSlot == null)
+            return;
+
+        currentSlot.SetCharacter(character);
+
+        Close();
     }
 }
