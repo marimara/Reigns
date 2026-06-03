@@ -6,10 +6,6 @@ public class GuildManager : MonoBehaviour
 {
     public static GuildManager Instance { get; private set; }
 
-    [Title("Guild")]
-    [ShowInInspector, ReadOnly]
-    public int CurrentDay { get; private set; } = 1;
-
     [ShowInInspector, ReadOnly]
     public int Gold { get; private set; }
     
@@ -36,6 +32,15 @@ public class GuildManager : MonoBehaviour
 
         Instance = this;
     }
+    private void OnEnable()
+    {
+        TimeManager.OnDayAdvanced += HandleDayAdvanced;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.OnDayAdvanced -= HandleDayAdvanced;
+    }
     
     public void AddMission(
         MissionAssignment assignment)
@@ -53,14 +58,23 @@ public class GuildManager : MonoBehaviour
 
         return false;
     }
-    [Button(ButtonSizes.Large)]
-    public void AdvanceDay()
+    private void ResolveMission(
+        MissionAssignment mission)
     {
-        CurrentDay++;
+        float roll = Random.value;
+
+        mission.WasSuccessful =
+            roll <= mission.SuccessChance;
+
+        mission.Finished = true;
 
         Debug.Log(
-            $"Advanced to Day {CurrentDay}");
-        
+            $"{mission.Character.CharacterName} | " +
+            $"{mission.Mission.MissionName} | " +
+            $"Success: {mission.WasSuccessful}");
+    }
+    private void HandleDayAdvanced()
+    {
         List<MissionAssignment> completedMissions =
             new();
 
@@ -82,6 +96,7 @@ public class GuildManager : MonoBehaviour
                 completedMissions.Add(mission);
             }
         }
+
         foreach (MissionAssignment mission
                  in completedMissions)
         {
@@ -90,20 +105,5 @@ public class GuildManager : MonoBehaviour
             Debug.Log(
                 $"{mission.Character.CharacterName} returned from mission");
         }
-    }
-    private void ResolveMission(
-        MissionAssignment mission)
-    {
-        float roll = Random.value;
-
-        mission.WasSuccessful =
-            roll <= mission.SuccessChance;
-
-        mission.Finished = true;
-
-        Debug.Log(
-            $"{mission.Character.CharacterName} | " +
-            $"{mission.Mission.MissionName} | " +
-            $"Success: {mission.WasSuccessful}");
     }
 }
