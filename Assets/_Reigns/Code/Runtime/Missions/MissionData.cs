@@ -73,7 +73,7 @@ public class MissionData : ScriptableObject
 
     [BoxGroup("Requirements")]
     [Range(0, 20)]
-    public int Endurance;
+    public int Defense;
 
     [BoxGroup("Requirements")]
     [Range(0, 20)]
@@ -97,7 +97,7 @@ public class MissionData : ScriptableObject
         Strength +
         Agility +
         Magic +
-        Endurance +
+        Defense +
         Charisma +
         Intellect +
         Sanity;

@@ -5,14 +5,18 @@ using Sirenix.OdinInspector;
 
 public class CharacterPosterUI : MonoBehaviour
 {
-    [Header("Data")]
+    [Title("Data")]
     [SerializeField] private CharacterData characterData;
 
-    [Header("Identity")]
+    [Title("States")]
+    [SerializeField] private GameObject characterContent;
+    [SerializeField] private GameObject selectCharacter;
+
+    [Title("Identity")]
     [SerializeField] private Image portraitImage;
     [SerializeField] private TMP_Text nameText;
     
-    [Header("Stats")]
+    [Title("Stats")]
     [SerializeField] private StatRowUI strengthRow;
     [SerializeField] private StatRowUI agilityRow;
     [SerializeField] private StatRowUI magicRow;
@@ -31,7 +35,11 @@ public class CharacterPosterUI : MonoBehaviour
     public void Refresh()
     {
         if (characterData == null)
+        {
+            characterContent.SetActive(false);
+            selectCharacter.SetActive(true);
             return;
+        }
 
         nameText.text = characterData.CharacterName;
         portraitImage.sprite = characterData.Portrait;
@@ -49,6 +57,16 @@ public class CharacterPosterUI : MonoBehaviour
     public void SetCharacter(CharacterData data)
     {
         characterData = data;
+        characterContent.SetActive(true);
+        selectCharacter.SetActive(false);
         Refresh();
+    }
+    [Button]
+    public void Clear()
+    {
+        characterData = null;
+
+        characterContent.SetActive(false);
+        selectCharacter.SetActive(true);
     }
 }
