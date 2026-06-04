@@ -7,6 +7,10 @@ public class MissionBoardUI : MonoBehaviour
     [SerializeField] private MissionPosterUI missionPoster;
 
     [SerializeField] private CharacterSlotUI[] characterSlots;
+    
+    [Title("Screens")]
+    [SerializeField] private GameObject missionBoard;
+    [SerializeField] private ResultScreenUI resultScreen;
 
     private CharacterSlotUI GetFirstFilledSlot()
     {
@@ -49,5 +53,14 @@ public class MissionBoardUI : MonoBehaviour
 
         Debug.Log(
             $"{assignment.Character.CharacterName} sent to {assignment.Mission.MissionName}");
+    }
+    public void OpenBoard()
+    {
+        missionBoard.SetActive(true);
+
+        if (GuildManager.Instance.CompletedMissions.Count > 0)
+        {
+            resultScreen.ShowNextMission();
+        }
     }
 }

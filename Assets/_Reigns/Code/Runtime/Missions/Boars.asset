@@ -22,7 +22,7 @@ MonoBehaviour:
     exist solely to provide starter quests for inexperienced adventurers.'
   DaysRequired: 1
   Slots: 1
-  GoldReward: 10
+  GoldReward: 100
   Strength: 3
   Agility: 2
   Magic: 0

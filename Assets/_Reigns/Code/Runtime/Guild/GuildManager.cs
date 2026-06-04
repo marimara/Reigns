@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class GuildManager : MonoBehaviour
 {
@@ -27,6 +29,19 @@ public class GuildManager : MonoBehaviour
         => activeMissions;
     public IReadOnlyList<MissionAssignment> CompletedMissions
         => completedMissions;
+    
+    public MissionAssignment ConsumeCompletedMission()
+    {
+        if (completedMissions.Count == 0)
+            return null;
+
+        MissionAssignment mission =
+            completedMissions[0];
+
+        completedMissions.RemoveAt(0);
+
+        return mission;
+    }
 
     private void Awake()
     {
