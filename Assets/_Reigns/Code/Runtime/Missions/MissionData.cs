@@ -42,6 +42,9 @@ public class MissionData : ScriptableObject
     [BoxGroup("Mission")]
     [MinValue(1)]
     public int Slots = 1;
+    [BoxGroup("Mission")]
+    [MinValue(1)]
+    public int MinDay = 1;
 
     // =========================
     // Rewards

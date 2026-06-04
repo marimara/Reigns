@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -5,7 +6,6 @@ public class MissionBoardUI : MonoBehaviour
 {
     [Title("References")]
     [SerializeField] private MissionPosterUI missionPoster;
-    [SerializeField] private MissionDatabase missionDatabase;
 
     [SerializeField] private CharacterSlotUI[] characterSlots;
     
@@ -14,6 +14,7 @@ public class MissionBoardUI : MonoBehaviour
     [SerializeField] private ResultScreenUI resultScreen;
     
     private int currentMissionIndex;
+    
     
     private void Start()
     {
@@ -73,13 +74,43 @@ public class MissionBoardUI : MonoBehaviour
     }
     private void RefreshMission()
     {
-        if (missionDatabase == null)
-            return;
-
-        if (missionDatabase.Missions.Count == 0)
+        if (MissionManager.Instance.AvailableMissions.Count == 0)
             return;
 
         missionPoster.SetMission(
-            missionDatabase.Missions[currentMissionIndex]);
+            MissionManager.Instance
+                .AvailableMissions[currentMissionIndex]);
     }
+    public void NextMission()
+    {
+        if (MissionManager.Instance.AvailableMissions.Count == 0)
+            return;
+
+        currentMissionIndex++;
+
+        if (currentMissionIndex >= MissionManager.Instance.AvailableMissions.Count)
+        {
+            currentMissionIndex = 0;
+        }
+
+        RefreshMission();
+    }
+    public void PreviousMission()
+    {
+
+        if (MissionManager.Instance.AvailableMissions.Count == 0)
+            return;
+
+        currentMissionIndex--;
+
+        if (currentMissionIndex < 0)
+        {
+            currentMissionIndex =
+                MissionManager.Instance.AvailableMissions.Count - 1;
+        }
+
+        RefreshMission();
+    }
+    
+    
 }
