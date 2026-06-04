@@ -5,12 +5,20 @@ public class MissionBoardUI : MonoBehaviour
 {
     [Title("References")]
     [SerializeField] private MissionPosterUI missionPoster;
+    [SerializeField] private MissionDatabase missionDatabase;
 
     [SerializeField] private CharacterSlotUI[] characterSlots;
     
     [Title("Screens")]
     [SerializeField] private GameObject missionBoard;
     [SerializeField] private ResultScreenUI resultScreen;
+    
+    private int currentMissionIndex;
+    
+    private void Start()
+    {
+        RefreshMission();
+    }
 
     private CharacterSlotUI GetFirstFilledSlot()
     {
@@ -62,5 +70,16 @@ public class MissionBoardUI : MonoBehaviour
         {
             resultScreen.ShowNextMission();
         }
+    }
+    private void RefreshMission()
+    {
+        if (missionDatabase == null)
+            return;
+
+        if (missionDatabase.Missions.Count == 0)
+            return;
+
+        missionPoster.SetMission(
+            missionDatabase.Missions[currentMissionIndex]);
     }
 }
