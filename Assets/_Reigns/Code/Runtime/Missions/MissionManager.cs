@@ -16,9 +16,20 @@ public class MissionManager : MonoBehaviour
 
     [ShowInInspector, ReadOnly]
     private List<MissionData> availableMissions = new();
+    [Title("History")]
+    [ShowInInspector, ReadOnly]
+    private List<MissionData> completedStoryMissions
+        = new();
+    [Title("Active")]
+    [ShowInInspector, ReadOnly]
+    private List<MissionData> activeMissionTypes
+        = new();
 
     public IReadOnlyList<MissionData>
         AvailableMissions => availableMissions;
+    public IReadOnlyList<MissionData>
+        CompletedStoryMissions
+        => completedStoryMissions;
 
     private void Awake()
     {
@@ -45,6 +56,12 @@ public class MissionManager : MonoBehaviour
             if (TimeManager.Instance.CurrentDay <
                 mission.MinDay)
                 continue;
+            
+            if (!mission.Repeatable &&
+                completedStoryMissions.Contains(mission))
+                continue;
+            if (activeMissionTypes.Contains(mission))
+                continue;
 
             availableMissions.Add(mission);
         }
@@ -60,6 +77,45 @@ public class MissionManager : MonoBehaviour
     }
     private void HandleDayAdvanced()
     {
+        RefreshAvailableMissions();
+    }
+    public void RegisterCompletedMission(
+        MissionData mission)
+    {
+        if (mission == null)
+            return;
+
+        if (mission.Repeatable)
+            return;
+
+        if (completedStoryMissions.Contains(mission))
+            return;
+
+        completedStoryMissions.Add(mission);
+
+        RefreshAvailableMissions();
+    }
+    public void RegisterActiveMission(
+        MissionData mission)
+    {
+        if (mission == null)
+            return;
+
+        if (activeMissionTypes.Contains(mission))
+            return;
+
+        activeMissionTypes.Add(mission);
+
+        RefreshAvailableMissions();
+    }
+    public void UnregisterActiveMission(
+        MissionData mission)
+    {
+        if (mission == null)
+            return;
+
+        activeMissionTypes.Remove(mission);
+
         RefreshAvailableMissions();
     }
 }

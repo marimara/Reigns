@@ -67,6 +67,10 @@ public class GuildManager : MonoBehaviour
         MissionAssignment assignment)
     {
         activeMissions.Add(assignment);
+
+        MissionManager.Instance
+            .RegisterActiveMission(
+                assignment.Mission);
     }
     public bool IsCharacterBusy(
         CharacterData character)
@@ -133,8 +137,16 @@ public class GuildManager : MonoBehaviour
                  in missionsToRemove)
         {
             activeMissions.Remove(mission);
+            
+            MissionManager.Instance
+                .UnregisterActiveMission(
+                    mission.Mission);
 
             completedMissions.Add(mission);
+            
+            MissionManager.Instance
+                .RegisterCompletedMission(
+                    mission.Mission);
 
             Debug.Log(
                 $"{mission.Character.CharacterName} returned from mission");

@@ -45,6 +45,9 @@ public class MissionData : ScriptableObject
     [BoxGroup("Mission")]
     [MinValue(1)]
     public int MinDay = 1;
+    
+    [BoxGroup("Mission")]
+    public bool Repeatable;
 
     // =========================
     // Rewards
