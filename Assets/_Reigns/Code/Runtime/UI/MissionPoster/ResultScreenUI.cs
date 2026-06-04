@@ -18,6 +18,7 @@ public class ResultScreenUI : MonoBehaviour
     [SerializeField] private Image missionImage;
     [SerializeField] private TMP_Text missionName;
     [SerializeField] private TMP_Text missionDescription;
+    [SerializeField] private MissionBoardUI missionBoardUI;
 
     [Title("Result")]
     [SerializeField] private GameObject approvedStamp;
@@ -111,6 +112,9 @@ public class ResultScreenUI : MonoBehaviour
         if (mission == null)
         {
             Hide();
+
+            missionBoardUI.ForceRefresh();
+
             return;
         }
 

@@ -6,6 +6,8 @@ public class MissionBoardUI : MonoBehaviour
 {
     [Title("References")]
     [SerializeField] private MissionPosterUI missionPoster;
+    
+    [SerializeField] private GameObject missionContent;
 
     [SerializeField] private CharacterSlotUI[] characterSlots;
     
@@ -57,6 +59,8 @@ public class MissionBoardUI : MonoBehaviour
 
         GuildManager.Instance.AddMission(
             assignment);
+        
+        RefreshMission();
 
         slot.Clear();
 
@@ -75,7 +79,18 @@ public class MissionBoardUI : MonoBehaviour
     private void RefreshMission()
     {
         if (MissionManager.Instance.AvailableMissions.Count == 0)
+        {
+            missionContent.SetActive(false);
             return;
+        }
+
+        missionContent.SetActive(true);
+
+        if (currentMissionIndex >=
+            MissionManager.Instance.AvailableMissions.Count)
+        {
+            currentMissionIndex = 0;
+        }
 
         missionPoster.SetMission(
             MissionManager.Instance
@@ -109,6 +124,10 @@ public class MissionBoardUI : MonoBehaviour
                 MissionManager.Instance.AvailableMissions.Count - 1;
         }
 
+        RefreshMission();
+    }
+    public void ForceRefresh()
+    {
         RefreshMission();
     }
     
