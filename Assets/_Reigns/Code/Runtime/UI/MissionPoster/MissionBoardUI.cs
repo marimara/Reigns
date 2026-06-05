@@ -48,6 +48,31 @@ public class MissionBoardUI : MonoBehaviour
 
         return count;
     }
+    private float CalculateCurrentMissionChance()
+    {
+        MissionData mission =
+            missionPoster.MissionData;
+
+        CharacterData characterA =
+            characterSlots[0]
+                .AssignedCharacter;
+
+        CharacterData characterB = null;
+
+        if (characterSlots.Length > 1 &&
+            characterSlots[1].gameObject.activeSelf)
+        {
+            characterB =
+                characterSlots[1]
+                    .AssignedCharacter;
+        }
+
+        return MissionResolver
+            .CalculateTeamSuccessChance(
+                characterA,
+                characterB,
+                mission);
+    }
     public void OnSendMissionClicked()
     {
         CharacterSlotUI slot = GetFirstFilledSlot();
@@ -74,9 +99,7 @@ public class MissionBoardUI : MonoBehaviour
         }
 
         float successChance =
-            MissionResolver.CalculateSuccessChance(
-                slot.AssignedCharacter,
-                mission);
+            CalculateCurrentMissionChance();
         
         CharacterData characterA =
             characterSlots[0].AssignedCharacter;
@@ -199,9 +222,7 @@ public class MissionBoardUI : MonoBehaviour
         }
 
         float chance =
-            MissionResolver.CalculateSuccessChance(
-                slot.AssignedCharacter,
-                missionPoster.MissionData);
+            CalculateCurrentMissionChance();
 
         missionPoster.SetSuccessChance(
             chance);
