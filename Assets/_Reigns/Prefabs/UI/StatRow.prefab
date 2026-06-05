@@ -187,8 +187,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eb03444cc640094ebde3f82e2e29565, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatRowUI
-  value: 5
+  baseValue: 5
+  modifier: 0
   squaresContainer: {fileID: 5335862148584350643}
+  normalColor: {r: 0, g: 0, b: 0, a: 1}
+  bonusColor: {r: 0.08022681, g: 0.6855345, b: 0, a: 1}
+  penaltyColor: {r: 1, g: 0.028301716, b: 0.028301716, a: 1}
 --- !u!1 &8227256377369607715
 GameObject:
   m_ObjectHideFlags: 0

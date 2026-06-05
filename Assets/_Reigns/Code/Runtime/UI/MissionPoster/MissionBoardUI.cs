@@ -22,17 +22,7 @@ public class MissionBoardUI : MonoBehaviour
     {
         RefreshMission();
     }
-
-    private CharacterSlotUI GetFirstFilledSlot()
-    {
-        foreach (CharacterSlotUI slot in characterSlots)
-        {
-            if (!slot.IsEmpty)
-                return slot;
-        }
-
-        return null;
-    }
+    
     private int GetFilledSlotCount()
     {
         int count = 0;
@@ -75,9 +65,7 @@ public class MissionBoardUI : MonoBehaviour
     }
     public void OnSendMissionClicked()
     {
-        CharacterSlotUI slot = GetFirstFilledSlot();
-
-        if (slot == null)
+        if (GetFilledSlotCount() == 0)
         {
             Debug.Log("No character selected");
             return;
@@ -125,7 +113,14 @@ public class MissionBoardUI : MonoBehaviour
         
         RefreshMission();
 
-        slot.Clear();
+        foreach (CharacterSlotUI characterSlot
+                 in characterSlots)
+        {
+            if (!characterSlot.gameObject.activeSelf)
+                continue;
+
+            characterSlot.Clear();
+        }
 
         Debug.Log(
             $"{assignment.CharacterA.CharacterName} sent to {assignment.Mission.MissionName}");
@@ -212,10 +207,7 @@ public class MissionBoardUI : MonoBehaviour
     }
     private void UpdateSuccessChance()
     {
-        CharacterSlotUI slot =
-            GetFirstFilledSlot();
-
-        if (slot == null)
+        if (GetFilledSlotCount() == 0)
         {
             missionPoster.SetSuccessChance(0);
             return;
