@@ -33,6 +33,21 @@ public class MissionBoardUI : MonoBehaviour
 
         return null;
     }
+    private int GetFilledSlotCount()
+    {
+        int count = 0;
+
+        foreach (CharacterSlotUI slot in characterSlots)
+        {
+            if (!slot.gameObject.activeSelf)
+                continue;
+
+            if (!slot.IsEmpty)
+                count++;
+        }
+
+        return count;
+    }
     public void OnSendMissionClicked()
     {
         CharacterSlotUI slot = GetFirstFilledSlot();
@@ -45,15 +60,40 @@ public class MissionBoardUI : MonoBehaviour
 
         MissionData mission =
             missionPoster.MissionData;
+        
+        int selectedCharacters =
+            GetFilledSlotCount();
+
+        if (selectedCharacters <
+            mission.Slots)
+        {
+            Debug.Log(
+                "Not enough characters selected");
+
+            return;
+        }
 
         float successChance =
             MissionResolver.CalculateSuccessChance(
                 slot.AssignedCharacter,
                 mission);
+        
+        CharacterData characterA =
+            characterSlots[0].AssignedCharacter;
+
+        CharacterData characterB = null;
+
+        if (mission.Slots >= 2)
+        {
+            characterB =
+                characterSlots[1]
+                    .AssignedCharacter;
+        }
 
         MissionAssignment assignment =
             new MissionAssignment(
-                slot.AssignedCharacter,
+                characterA,
+                characterB,
                 mission,
                 successChance);
 
@@ -65,7 +105,7 @@ public class MissionBoardUI : MonoBehaviour
         slot.Clear();
 
         Debug.Log(
-            $"{assignment.Character.CharacterName} sent to {assignment.Mission.MissionName}");
+            $"{assignment.CharacterA.CharacterName} sent to {assignment.Mission.MissionName}");
     }
     public void OpenBoard()
     {

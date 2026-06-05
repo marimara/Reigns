@@ -1,6 +1,7 @@
 public class MissionAssignment
 {
-    public CharacterData Character;
+    public CharacterData CharacterA;
+    public CharacterData CharacterB;
     public MissionData Mission;
 
     public int DaysRemaining;
@@ -14,11 +15,13 @@ public class MissionAssignment
     public int GoldEarned;
 
     public MissionAssignment(
-        CharacterData character,
+        CharacterData characterA,
+        CharacterData characterB,
         MissionData mission,
         float successChance)
     {
-        Character = character;
+        CharacterA = characterA;
+        CharacterB = characterB;
         Mission = mission;
 
         SuccessChance = successChance;

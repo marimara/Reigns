@@ -24,7 +24,7 @@ MonoBehaviour:
 
     Legally, we are required to mention that.'
   DaysRequired: 2
-  Slots: 1
+  Slots: 2
   MinDay: 3
   Repeatable: 0
   RequiredMission: {fileID: 11400000, guid: 77e2cf9a9793c4848b72248e177eb916, type: 2}

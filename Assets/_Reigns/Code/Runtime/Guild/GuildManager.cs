@@ -77,7 +77,10 @@ public class GuildManager : MonoBehaviour
     {
         foreach (MissionAssignment mission in activeMissions)
         {
-            if (mission.Character == character)
+            if (mission.CharacterA == character)
+                return true;
+
+            if (mission.CharacterB == character)
                 return true;
         }
 
@@ -104,7 +107,7 @@ public class GuildManager : MonoBehaviour
         }
 
         Debug.Log(
-            $"{mission.Character.CharacterName} | " +
+            $"{mission.CharacterA.CharacterName} | " +
             $"{mission.Mission.MissionName} | " +
             $"Success: {mission.WasSuccessful} | " +
             $"Gold Earned: {mission.GoldEarned}");
@@ -120,7 +123,7 @@ public class GuildManager : MonoBehaviour
             mission.DaysRemaining--;
 
             Debug.Log(
-                $"{mission.Character.CharacterName} | " +
+                $"{mission.CharacterA.CharacterName} | " +
                 $"{mission.Mission.MissionName} | " +
                 $"{mission.DaysRemaining} days remaining");
 
@@ -149,7 +152,7 @@ public class GuildManager : MonoBehaviour
                     mission.Mission);
 
             Debug.Log(
-                $"{mission.Character.CharacterName} returned from mission");
+                $"{mission.CharacterA.CharacterName} returned from mission");
         }
     }
 }
