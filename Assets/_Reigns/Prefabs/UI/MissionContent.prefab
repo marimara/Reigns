@@ -682,6 +682,7 @@ MonoBehaviour:
   daysText: {fileID: 1583648081441567371}
   slotsText: {fileID: 8853054278864392857}
   rewardText: {fileID: 2669274376357265710}
+  successChanceText: {fileID: 1437697576567738879}
 --- !u!1 &3671658273270061879
 GameObject:
   m_ObjectHideFlags: 0

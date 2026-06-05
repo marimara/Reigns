@@ -1,8 +1,11 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class CharacterSlotUI : MonoBehaviour
 {
+    public static Action OnCharacterChanged;
+    
     [Title("References")]
     [SerializeField] private CharacterPosterUI posterUI;
 
@@ -14,11 +17,14 @@ public class CharacterSlotUI : MonoBehaviour
 
     public bool IsEmpty => assignedCharacter == null;
 
-    public void SetCharacter(CharacterData character)
+    public void SetCharacter(
+        CharacterData character)
     {
         assignedCharacter = character;
 
         posterUI.SetCharacter(character);
+
+        OnCharacterChanged?.Invoke();
     }
 
     public void Clear()
@@ -26,6 +32,8 @@ public class CharacterSlotUI : MonoBehaviour
         assignedCharacter = null;
 
         posterUI.Clear();
+
+        OnCharacterChanged?.Invoke();
     }
     public void OnClicked()
     {

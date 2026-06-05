@@ -97,6 +97,8 @@ public class MissionBoardUI : MonoBehaviour
         missionPoster.SetMission(
             MissionManager.Instance
                 .AvailableMissions[currentMissionIndex]);
+        
+        UpdateSuccessChance();
     }
     public void NextMission()
     {
@@ -132,6 +134,35 @@ public class MissionBoardUI : MonoBehaviour
     {
         RefreshMission();
     }
-    
+    private void OnEnable()
+    {
+        CharacterSlotUI.OnCharacterChanged +=
+            UpdateSuccessChance;
+    }
+
+    private void OnDisable()
+    {
+        CharacterSlotUI.OnCharacterChanged -=
+            UpdateSuccessChance;
+    }
+    private void UpdateSuccessChance()
+    {
+        CharacterSlotUI slot =
+            GetFirstFilledSlot();
+
+        if (slot == null)
+        {
+            missionPoster.SetSuccessChance(0);
+            return;
+        }
+
+        float chance =
+            MissionResolver.CalculateSuccessChance(
+                slot.AssignedCharacter,
+                missionPoster.MissionData);
+
+        missionPoster.SetSuccessChance(
+            chance);
+    }
     
 }
