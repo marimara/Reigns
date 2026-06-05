@@ -30,6 +30,16 @@ public class MissionManager : MonoBehaviour
     public IReadOnlyList<MissionData>
         CompletedStoryMissions
         => completedStoryMissions;
+    
+    public bool HasCompletedMission(
+        MissionData mission)
+    {
+        if (mission == null)
+            return false;
+
+        return completedStoryMissions
+            .Contains(mission);
+    }
 
     private void Awake()
     {
@@ -53,15 +63,31 @@ public class MissionManager : MonoBehaviour
         foreach (MissionData mission
                  in missionDatabase.Missions)
         {
+            Debug.Log(
+                $"{mission.MissionName} | " +
+                $"Day:{TimeManager.Instance.CurrentDay} | " +
+                $"MinDay:{mission.MinDay}");
+            
             if (TimeManager.Instance.CurrentDay <
                 mission.MinDay)
                 continue;
             
+            if (mission.RequiredMission != null &&
+                !HasCompletedMission(
+                    mission.RequiredMission))
+            {
+                continue;
+            }
+            
             if (!mission.Repeatable &&
                 completedStoryMissions.Contains(mission))
                 continue;
+            
             if (activeMissionTypes.Contains(mission))
                 continue;
+            
+            Debug.Log(
+                $"AVAILABLE: {mission.MissionName}");
 
             availableMissions.Add(mission);
         }

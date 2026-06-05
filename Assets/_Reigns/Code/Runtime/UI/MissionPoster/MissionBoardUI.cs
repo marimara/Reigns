@@ -69,6 +69,8 @@ public class MissionBoardUI : MonoBehaviour
     }
     public void OpenBoard()
     {
+        RefreshMission();
+
         missionBoard.SetActive(true);
 
         if (GuildManager.Instance.CompletedMissions.Count > 0)

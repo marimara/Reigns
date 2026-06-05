@@ -48,6 +48,9 @@ public class MissionData : ScriptableObject
     
     [BoxGroup("Mission")]
     public bool Repeatable;
+    
+    [BoxGroup("Mission")]
+    public MissionData RequiredMission;
 
     // =========================
     // Rewards
