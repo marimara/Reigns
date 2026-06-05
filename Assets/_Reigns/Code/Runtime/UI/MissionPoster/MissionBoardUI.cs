@@ -98,6 +98,8 @@ public class MissionBoardUI : MonoBehaviour
             MissionManager.Instance
                 .AvailableMissions[currentMissionIndex]);
         
+        UpdateSlotVisibility();
+        
         UpdateSuccessChance();
     }
     public void NextMission()
@@ -163,6 +165,21 @@ public class MissionBoardUI : MonoBehaviour
 
         missionPoster.SetSuccessChance(
             chance);
+    }
+    private void UpdateSlotVisibility()
+    {
+        if (missionPoster.MissionData == null)
+            return;
+
+        int requiredSlots =
+            missionPoster.MissionData.Slots;
+
+        characterSlots[0]
+            .gameObject.SetActive(true);
+
+        characterSlots[1]
+            .gameObject.SetActive(
+                requiredSlots >= 2);
     }
     
 }
