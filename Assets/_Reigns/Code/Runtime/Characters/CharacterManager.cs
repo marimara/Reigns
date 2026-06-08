@@ -59,6 +59,37 @@ public class CharacterManager : MonoBehaviour
             UnlockCharacter(character);
         }
     }
+    private void OnEnable()
+    {
+        TimeManager.OnDayAdvanced +=
+            CheckDayUnlocks;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.OnDayAdvanced -=
+            CheckDayUnlocks;
+    }
+    private void CheckDayUnlocks()
+    {
+        foreach (CharacterData character
+                 in database.Characters)
+        {
+            if (character.UnlockType !=
+                CharacterUnlockType.Day)
+            {
+                continue;
+            }
+
+            if (TimeManager.Instance.CurrentDay <
+                character.RequiredDay)
+            {
+                continue;
+            }
+
+            UnlockCharacter(character);
+        }
+    }
     [Button]
     private void PrintUnlockedCharacters()
     {
