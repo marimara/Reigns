@@ -115,43 +115,64 @@ public static class MissionResolver
         int relevantStats = 0;
 
         AddScore(
-            TeamStrength(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Strength),
             mission.Strength,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamAgility(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Agility),
             mission.Agility,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamMagic(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Magic),
             mission.Magic,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamDefense(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Defense),
             mission.Defense,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamCharisma(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Charisma),
             mission.Charisma,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamIntellect(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Intellect),
             mission.Intellect,
             ref total,
             ref relevantStats);
 
         AddScore(
-            TeamSanity(a, b),
+            TeamStat(
+                a,
+                b,
+                CharacterStatType.Sanity),
             mission.Sanity,
             ref total,
             ref relevantStats);
@@ -175,59 +196,27 @@ public static class MissionResolver
             character.Intellect >= mission.Intellect &&
             character.Sanity >= mission.Sanity;
     }
-    private static int TeamStrength(
+    private static int TeamStat(
         CharacterData a,
-        CharacterData b)
+        CharacterData b,
+        CharacterStatType stat)
     {
-        return (a?.Strength ?? 0)
-               + (b?.Strength ?? 0);
+        return
+            (a != null
+                ? CharacterConditionManager
+                    .Instance
+                    .GetCurrentStat(
+                        a,
+                        stat)
+                : 0)
+            +
+            (b != null
+                ? CharacterConditionManager
+                    .Instance
+                    .GetCurrentStat(
+                        b,
+                        stat)
+                : 0);
     }
-
-    private static int TeamAgility(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Agility ?? 0)
-               + (b?.Agility ?? 0);
-    }
-
-    private static int TeamMagic(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Magic ?? 0)
-               + (b?.Magic ?? 0);
-    }
-
-    private static int TeamDefense(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Defense ?? 0)
-               + (b?.Defense ?? 0);
-    }
-
-    private static int TeamCharisma(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Charisma ?? 0)
-               + (b?.Charisma ?? 0);
-    }
-
-    private static int TeamIntellect(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Intellect ?? 0)
-               + (b?.Intellect ?? 0);
-    }
-
-    private static int TeamSanity(
-        CharacterData a,
-        CharacterData b)
-    {
-        return (a?.Sanity ?? 0)
-               + (b?.Sanity ?? 0);
-    }
+    
 }

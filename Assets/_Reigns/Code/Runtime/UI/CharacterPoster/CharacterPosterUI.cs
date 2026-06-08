@@ -48,14 +48,51 @@ public class CharacterPosterUI : MonoBehaviour
             characterData.Strength,
             CharacterConditionManager
                 .Instance
-                .GetStrengthModifier(
-                    characterData));
-        agilityRow.SetValue(characterData.Agility);
-        magicRow.SetValue(characterData.Magic);
-        defenseRow.SetValue(characterData.Defense);
-        sanityRow.SetValue(characterData.Sanity);
-        charismaRow.SetValue(characterData.Charisma);
-        intellectRow.SetValue(characterData.Intellect);
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Strength));
+        agilityRow.SetValue(
+            characterData.Agility,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Agility));
+        magicRow.SetValue(
+            characterData.Magic,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Magic));
+        defenseRow.SetValue(
+            characterData.Defense,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Defense));
+        sanityRow.SetValue(
+            characterData.Sanity,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Sanity));
+        charismaRow.SetValue(
+            characterData.Charisma,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Charisma));
+        intellectRow.SetValue(
+            characterData.Intellect,
+            CharacterConditionManager
+                .Instance
+                .GetModifier(
+                    characterData,
+                    CharacterStatType.Intellect));
         
     }
     [Button]
