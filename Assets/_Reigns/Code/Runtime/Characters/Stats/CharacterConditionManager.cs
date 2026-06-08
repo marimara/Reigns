@@ -155,4 +155,38 @@ public class CharacterConditionManager : MonoBehaviour
             _ => 0
         };
     }
+    public void AdvanceDay()
+    {
+        foreach (var pair in activeConditions)
+        {
+            List<CharacterCondition> conditions =
+                pair.Value;
+
+            for (int i = conditions.Count - 1;
+                 i >= 0;
+                 i--)
+            {
+                conditions[i].DaysRemaining--;
+      
+
+                if (conditions[i].DaysRemaining <= 0)
+                {
+                    Debug.Log(
+                        $"{pair.Key.CharacterName} lost " +
+                        $"{conditions[i].Data.ConditionName}");
+
+                    conditions.RemoveAt(i);
+                }
+            }
+        }
+    }
+    private void OnEnable()
+    {
+        TimeManager.OnDayAdvanced += AdvanceDay;
+    }
+
+    private void OnDisable()
+    {
+        TimeManager.OnDayAdvanced -= AdvanceDay;
+    }
 }
