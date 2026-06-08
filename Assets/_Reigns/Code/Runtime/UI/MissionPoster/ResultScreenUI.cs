@@ -24,6 +24,9 @@ public class ResultScreenUI : MonoBehaviour
     [SerializeField] private GameObject approvedStamp;
     [SerializeField] private GameObject failedStamp;
     [SerializeField] private TMP_Text rewardText;
+    [SerializeField] private GameObject modifierContent;
+    [SerializeField] private Image modifierImage;
+    [SerializeField] private TMP_Text modifierText;
     [SerializeField] private GameObject continueButton;
     
     [Title("Debug")]
@@ -64,6 +67,24 @@ public class ResultScreenUI : MonoBehaviour
             mission.WasSuccessful
                 ? $"+{mission.GoldEarned} Gold"
                 : "No Reward";
+        modifierContent.SetActive(false);
+        
+        if (mission.GrantedCondition != null)
+        {
+            ConditionData condition =
+                mission.GrantedCondition;
+
+            modifierContent.SetActive(true);
+
+            modifierText.text =
+                BuildConditionText(
+                    mission,
+                    condition);
+        }
+        else
+        {
+            modifierContent.SetActive(false);
+        }
         
         DOVirtual.DelayedCall(
             0.75f,
@@ -142,5 +163,46 @@ public class ResultScreenUI : MonoBehaviour
 
         sequence.Join(
             canvas.DOFade(1f, 0.15f));
+    }
+    
+    private string BuildConditionText(
+        MissionAssignment mission,
+        ConditionData condition)
+    {
+        string statText = "";
+
+        if (condition.Strength != 0)
+            statText =
+                $"Strength {condition.Strength:+#;-#}";
+
+        else if (condition.Agility != 0)
+            statText =
+                $"Agility {condition.Agility:+#;-#}";
+
+        else if (condition.Magic != 0)
+            statText =
+                $"Magic {condition.Magic:+#;-#}";
+
+        else if (condition.Defense != 0)
+            statText =
+                $"Defense {condition.Defense:+#;-#}";
+
+        else if (condition.Charisma != 0)
+            statText =
+                $"Charisma {condition.Charisma:+#;-#}";
+
+        else if (condition.Intellect != 0)
+            statText =
+                $"Intellect {condition.Intellect:+#;-#}";
+
+        else if (condition.Sanity != 0)
+            statText =
+                $"Sanity {condition.Sanity:+#;-#}";
+
+        return
+            $"{mission.CharacterA.CharacterName}\n" +
+            $"{condition.ConditionName}\n" +
+            $"{statText}\n" +
+            $"{condition.DurationDays} Days";
     }
 }

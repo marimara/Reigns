@@ -44,7 +44,12 @@ public class CharacterPosterUI : MonoBehaviour
         nameText.text = characterData.CharacterName;
         portraitImage.sprite = characterData.Portrait;
         
-        strengthRow.SetValue(characterData.Strength);
+        strengthRow.SetValue(
+            characterData.Strength,
+            CharacterConditionManager
+                .Instance
+                .GetStrengthModifier(
+                    characterData));
         agilityRow.SetValue(characterData.Agility);
         magicRow.SetValue(characterData.Magic);
         defenseRow.SetValue(characterData.Defense);

@@ -13,6 +13,8 @@ public class MissionAssignment
     public bool WasSuccessful;
     
     public int GoldEarned;
+    
+    public ConditionData GrantedCondition;
 
     public MissionAssignment(
         CharacterData characterA,

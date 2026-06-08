@@ -18,12 +18,13 @@ public class GuildManager : MonoBehaviour
     }
 
     [Title("Active Missions")]
-    [ShowInInspector, ReadOnly]
-    private List<MissionAssignment> activeMissions = new();
+    [ShowInInspector, ReadOnly] private List<MissionAssignment> activeMissions = new();
     
     [Title("Completed Missions")]
-    [ShowInInspector, ReadOnly]
-    private List<MissionAssignment> completedMissions = new();
+    [ShowInInspector, ReadOnly] private List<MissionAssignment> completedMissions = new();
+    
+    [Title("Conditions")]
+    [SerializeField] private ConditionDatabase conditionDatabase;
 
     public IReadOnlyList<MissionAssignment> ActiveMissions
         => activeMissions;
@@ -86,6 +87,33 @@ public class GuildManager : MonoBehaviour
 
         return false;
     }
+    private ConditionData GetRandomCondition(
+        MissionType missionType,
+        bool positive)
+    {
+        List<ConditionData> valid =
+            new();
+
+        foreach (ConditionData condition
+                 in conditionDatabase.Conditions)
+        {
+            if (condition.MissionType != missionType)
+                continue;
+
+            if (condition.IsPositive != positive)
+                continue;
+
+            valid.Add(condition);
+        }
+
+        if (valid.Count == 0)
+            return null;
+
+        return valid[
+            Random.Range(
+                0,
+                valid.Count)];
+    }
     private void ResolveMission(
         MissionAssignment mission)
     {
@@ -100,6 +128,20 @@ public class GuildManager : MonoBehaviour
             mission.WasSuccessful
                 ? mission.Mission.GoldReward
                 : 0;
+        
+        mission.GrantedCondition =
+            GetRandomCondition(
+                mission.Mission.MissionType,
+                mission.WasSuccessful);
+        
+        if (mission.GrantedCondition != null)
+        {
+            CharacterConditionManager
+                .Instance
+                .AddCondition(
+                    mission.CharacterA,
+                    mission.GrantedCondition);
+        }
 
         if (mission.WasSuccessful)
         {
