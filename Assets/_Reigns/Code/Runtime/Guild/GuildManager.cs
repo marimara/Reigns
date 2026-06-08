@@ -25,6 +25,8 @@ public class GuildManager : MonoBehaviour
     
     [Title("Conditions")]
     [SerializeField] private ConditionDatabase conditionDatabase;
+    [SerializeField, Range(0f, 1f)] private float positiveConditionChance = 0.25f;
+    [SerializeField, Range(0f, 1f)] private float negativeConditionChance = 0.35f;
 
     public IReadOnlyList<MissionAssignment> ActiveMissions
         => activeMissions;
@@ -114,6 +116,16 @@ public class GuildManager : MonoBehaviour
                 0,
                 valid.Count)];
     }
+    private bool ShouldGrantCondition(
+        bool success)
+    {
+        float chance =
+            success
+                ? positiveConditionChance
+                : negativeConditionChance;
+
+        return Random.value <= chance;
+    }
     private void ResolveMission(
         MissionAssignment mission)
     {
@@ -129,10 +141,18 @@ public class GuildManager : MonoBehaviour
                 ? mission.Mission.GoldReward
                 : 0;
         
-        mission.GrantedCondition =
-            GetRandomCondition(
-                mission.Mission.MissionType,
-                mission.WasSuccessful);
+        if (ShouldGrantCondition(
+                mission.WasSuccessful))
+        {
+            mission.GrantedCondition =
+                GetRandomCondition(
+                    mission.Mission.MissionType,
+                    mission.WasSuccessful);
+        }
+        else
+        {
+            mission.GrantedCondition = null;
+        }
         
         if (mission.GrantedCondition != null)
         {
