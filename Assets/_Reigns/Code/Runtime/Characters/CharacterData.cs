@@ -38,4 +38,27 @@ public class CharacterData : ScriptableObject
     [BoxGroup("Stats")]
     [Range(0, 10)]
     public int Sanity;
+    
+    [BoxGroup("Unlock")]
+    public CharacterUnlockType UnlockType;
+
+    [BoxGroup("Unlock")]
+    [ShowIf(nameof(ShowDayUnlock))]
+    public int RequiredDay = 1;
+
+    [BoxGroup("Unlock")]
+    [ShowIf(nameof(ShowMissionUnlock))]
+    public MissionData RequiredMission;
+    
+    private bool ShowDayUnlock()
+    {
+        return UnlockType ==
+               CharacterUnlockType.Day;
+    }
+
+    private bool ShowMissionUnlock()
+    {
+        return UnlockType ==
+               CharacterUnlockType.Mission;
+    }
 }

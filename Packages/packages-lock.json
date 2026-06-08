@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.gaton.de-tach": {
+      "version": "https://github.com/andre-gp/De-Tach.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "82983b4ec5aa851bc5a483e3e382b3e52c037dad"
+    },
+    "com.gaton.editor.scenehop": {
+      "version": "https://github.com/andre-gp/SceneHop.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "8ff4c6c1c373a4be02c33e8f5762a19db040901a"
+    },
     "com.unity.2d.animation": {
       "version": "13.0.4",
       "depth": 0,

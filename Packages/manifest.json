@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.gaton.de-tach": "https://github.com/andre-gp/De-Tach.git",
+    "com.gaton.editor.scenehop": "https://github.com/andre-gp/SceneHop.git",
     "com.unity.2d.animation": "13.0.4",
     "com.unity.2d.aseprite": "3.0.1",
     "com.unity.2d.psdimporter": "12.0.1",
