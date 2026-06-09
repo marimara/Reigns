@@ -63,12 +63,16 @@ public class CharacterManager : MonoBehaviour
     {
         TimeManager.OnDayAdvanced +=
             CheckDayUnlocks;
+        GuildManager.OnMissionCompleted +=
+            CheckMissionUnlocks;
     }
 
     private void OnDisable()
     {
         TimeManager.OnDayAdvanced -=
             CheckDayUnlocks;
+        GuildManager.OnMissionCompleted -=
+            CheckMissionUnlocks;
     }
     private void CheckDayUnlocks()
     {
@@ -83,6 +87,27 @@ public class CharacterManager : MonoBehaviour
 
             if (TimeManager.Instance.CurrentDay <
                 character.RequiredDay)
+            {
+                continue;
+            }
+
+            UnlockCharacter(character);
+        }
+    }
+    private void CheckMissionUnlocks(
+        MissionData completedMission)
+    {
+        foreach (CharacterData character
+                 in database.Characters)
+        {
+            if (character.UnlockType !=
+                CharacterUnlockType.Mission)
+            {
+                continue;
+            }
+
+            if (character.RequiredMission !=
+                completedMission)
             {
                 continue;
             }

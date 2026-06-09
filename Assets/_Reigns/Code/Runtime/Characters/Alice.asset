@@ -21,3 +21,6 @@ MonoBehaviour:
   Charisma: 2
   Intellect: 6
   Sanity: 3
+  UnlockType: 0
+  RequiredDay: 1
+  RequiredMission: {fileID: 0}

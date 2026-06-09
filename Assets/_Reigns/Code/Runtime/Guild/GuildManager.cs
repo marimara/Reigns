@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 
 public class GuildManager : MonoBehaviour
 {
     public static GuildManager Instance { get; private set; }
+    
+    public static event Action<MissionData> OnMissionCompleted;
 
     [ShowInInspector, ReadOnly]
     public int Gold { get; private set; }
@@ -212,6 +216,9 @@ public class GuildManager : MonoBehaviour
             MissionManager.Instance
                 .RegisterCompletedMission(
                     mission.Mission);
+            
+            OnMissionCompleted?.Invoke(
+                mission.Mission);
 
             Debug.Log(
                 $"{mission.CharacterA.CharacterName} returned from mission");
