@@ -9,8 +9,7 @@ public class CharacterSelectionPanelUI : MonoBehaviour
     
     [SerializeField] private CharacterButtonUI characterButtonPrefab;
     [SerializeField] private Transform characterListParent;
-
-    [SerializeField] private CharacterData[] availableCharacters;
+    
     
     public static CharacterSelectionPanelUI Instance { get; private set; }
 
@@ -60,7 +59,10 @@ public class CharacterSelectionPanelUI : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        foreach (CharacterData character in availableCharacters)
+        foreach (CharacterData character
+                 in CharacterManager
+                     .Instance
+                     .UnlockedCharacters)
         {
             if (GuildManager.Instance.IsCharacterBusy(character))
                 continue;
