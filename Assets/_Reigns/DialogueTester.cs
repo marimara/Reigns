@@ -7,6 +7,6 @@ public class DialogueTester : MonoBehaviour
     [Button]
     public void StartLouiseConversation()
     {
-        DialogueManager.StartConversation("Louise Greeting");
+        DialogueManager.StartConversation("Guida Introdution");
     }
 }
