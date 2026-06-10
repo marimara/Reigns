@@ -21,6 +21,6 @@ MonoBehaviour:
   Charisma: 6
   Intellect: 10
   Sanity: 5
-  UnlockType: 1
+  UnlockType: 2
   RequiredDay: 3
-  RequiredMission: {fileID: 11400000, guid: 6c56eb9cc399df148a1a9c6e24e59a8b, type: 2}
+  RequiredMission: {fileID: 11400000, guid: 77e2cf9a9793c4848b72248e177eb916, type: 2}
