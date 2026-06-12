@@ -1,6 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using PixelCrushers.DialogueSystem;
 
 public class TimeManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class TimeManager : MonoBehaviour
         }
 
         Instance = this;
+
+        SyncDialogueVariables();
     }
 
     [Button(ButtonSizes.Large)]
@@ -28,9 +31,14 @@ public class TimeManager : MonoBehaviour
     {
         CurrentDay++;
 
-        Debug.Log(
-            $"Advanced to Day {CurrentDay}");
+        SyncDialogueVariables();
+
+        Debug.Log($"Advanced to Day {CurrentDay}");
 
         OnDayAdvanced?.Invoke();
+    }
+    private void SyncDialogueVariables()
+    {
+        DialogueLua.SetVariable("Actual_Day", CurrentDay);
     }
 }

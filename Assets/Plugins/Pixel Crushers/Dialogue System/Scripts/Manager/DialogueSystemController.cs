@@ -20,6 +20,8 @@ namespace PixelCrushers.DialogueSystem
 
     public delegate void SubtitleDelegate(Subtitle subtitle);
 
+    public delegate void ResponsesDelegate(Response[] responses);
+
     public delegate void AssetLoadedDelegate(UnityEngine.Object asset);
 
     public delegate string GetLocalizedTextDelegate(string s);
@@ -65,6 +67,12 @@ namespace PixelCrushers.DialogueSystem
         public bool interruptActiveConversations = false;
 
         /// <summary>
+        /// Ignore continue button click if new conversation started on same frame that previous conversation ended and not allowing simultaneous conversations.
+        /// </summary>
+        [Tooltip("Ignore continue button click if new conversation started on same frame that previous conversation ended and not allowing simultaneous conversations.")]
+        public bool ignoreContinueWhenConversationsStartAndEndSameFrame = true;
+
+        /// <summary>
         /// Stop evaluating links at first valid NPC link unless parent uses RandomizeNextEntry().
         /// </summary>
         [Tooltip("Stop evaluating links at first valid NPC link unless parent uses RandomizeNextEntry().")]
@@ -94,7 +102,7 @@ namespace PixelCrushers.DialogueSystem
         [Tooltip("Tick if your conversations reference Dialog[x].SimStatus.")]
         public bool includeSimStatus = false;
 
-        [Tooltip("Use a copy of the dialogue database at runtime instead of the asset file directly. This allows you to change the database without affecting the asset.")]
+        [Tooltip("Use a copy of the dialogue database at runtime instead of the asset file directly. This allows you to change the database without affecting the asset. Warm Up Conversation Controller must be set to Off to untick this checkbox.")]
         public bool instantiateDatabase = true;
 
         /// <summary>
@@ -180,6 +188,8 @@ namespace PixelCrushers.DialogueSystem
         /// Raised just prior to showing a subtitle.
         /// </summary>
         public event SubtitleDelegate conversationLinePrepared = delegate { };
+
+        public event ResponsesDelegate conversationResponseMenuPrepared = delegate { };
 
         /// <summary>
         /// Raised when StopAllConversations() is called.
@@ -414,6 +424,7 @@ namespace PixelCrushers.DialogueSystem
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void InitStaticVariables()
         {
+            isWarmingUp = false;
             applicationIsQuitting = false;
             lastInitialDatabaseName = null;
         }
@@ -601,15 +612,17 @@ namespace PixelCrushers.DialogueSystem
                 m_uiLocalizationManager = GetComponent<UILocalizationManager>() ?? PixelCrushers.GameObjectUtility.FindFirstObjectByType<UILocalizationManager>();
                 if (m_uiLocalizationManager == null)
                 {
-                    m_uiLocalizationManager = gameObject.AddComponent<UILocalizationManager>();
-
+                    if (gameObject != null)
+                    {
+                        m_uiLocalizationManager = gameObject.AddComponent<UILocalizationManager>();
+                    }
                 }
-                if (m_uiLocalizationManager.textTable == null)
+                if (m_uiLocalizationManager != null && m_uiLocalizationManager.textTable == null)
                 {
                     m_uiLocalizationManager.textTable = displaySettings.localizationSettings.textTable;
                 }
             }
-            m_uiLocalizationManager.currentLanguage = language;
+            if (m_uiLocalizationManager != null) m_uiLocalizationManager.currentLanguage = language;
             displaySettings.localizationSettings.language = language;
             Localization.language = language;
         }
@@ -708,7 +721,7 @@ namespace PixelCrushers.DialogueSystem
                     {
                         var model = new ConversationModel(databaseManager.masterDatabase, FakeConversationTitle, null, null, false, null);
                         var view = this.gameObject.AddComponent<ConversationView>();
-                        view.Initialize(dialogueUI, GetNewSequencer(), displaySettings, OnDialogueEntrySpoken);
+                        view.Initialize(dialogueUI, GetNewSequencer(), displaySettings, null, OnDialogueEntrySpoken);
                         view.SetPCPortrait(model.GetPCSprite(), model.GetPCName());
                         var controller = new ConversationController();
                         controller.Initialize(model, view, reevaluateLinksAfterSubtitle,
@@ -746,7 +759,7 @@ namespace PixelCrushers.DialogueSystem
             masterDatabase.conversations.Add(fakeConversation);
             var warmupModel = new ConversationModel(databaseManager.masterDatabase, FakeConversationTitle, null, null, false, null);
             var warmupView = this.gameObject.AddComponent<ConversationView>();
-            warmupView.Initialize(dialogueUI, GetNewSequencer(), displaySettings, OnDialogueEntrySpoken);
+            warmupView.Initialize(dialogueUI, GetNewSequencer(), displaySettings, null, OnDialogueEntrySpoken);
             warmupView.SetPCPortrait(warmupModel.GetPCSprite(), warmupModel.GetPCName());
             warmupController = new ConversationController();
             warmupController.Initialize(warmupModel, warmupView, reevaluateLinksAfterSubtitle, displaySettings.inputSettings.alwaysForceResponseMenu, OnEndConversation);
@@ -992,7 +1005,7 @@ namespace PixelCrushers.DialogueSystem
             var prevCurrentConversant = currentConversant;
             currentActor = actor;
             currentConversant = conversant;
-            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, 
+            var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions,
                 isDialogueEntryValid, initialDialogueEntryID, true, true, useLinearGroupMode);
             currentActor = prevCurrentActor;
             currentConversant = prevCurrentConversant;
@@ -1114,7 +1127,7 @@ namespace PixelCrushers.DialogueSystem
                 lastConversationStarted = title;
 
                 // If we previously overrode display settings or UI, restore the original:
-                if (!isConversationActive &&
+                if (//--- Need to restore even if simultaneous conversation is playing: !isConversationActive &&
                     ((m_overrodeDisplaySettings && m_originalDisplaySettings != null) || (m_originalDialogueUI != null)))
                 {
                     RestoreOriginalUI();
@@ -1124,7 +1137,7 @@ namespace PixelCrushers.DialogueSystem
 
                 m_calledRandomizeNextEntry = false;
                 m_conversationController = new ConversationController();
-                var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid, 
+                var model = new ConversationModel(m_databaseManager.masterDatabase, title, actor, conversant, allowLuaExceptions, isDialogueEntryValid,
                     initialDialogueEntryID, stopEvaluationAtFirstValid, false, useLinearGroupMode, actorOverrides);
                 var needToSetRandomizeNextEntryAgain = m_calledRandomizeNextEntry; // Special case when START node leads to group node with RandomizeNextEntry().
                 m_calledRandomizeNextEntry = false;
@@ -1151,7 +1164,7 @@ namespace PixelCrushers.DialogueSystem
                 sequencer.keepCameraPositionOnClose = displaySettings.cameraSettings.keepCameraPositionAtConversationEnd;
                 var view = this.gameObject.AddComponent<ConversationView>();
                 sequencer.conversationView = view;
-                view.Initialize(dialogueUI, sequencer, displaySettings, OnDialogueEntrySpoken);
+                view.Initialize(dialogueUI, sequencer, displaySettings, model.conversationOverrideDisplaySettings, OnDialogueEntrySpoken);
                 view.SetPCPortrait(model.GetPCSprite(), model.GetPCName());
 
                 // Note: Initialize() no longer sends OnConversationStart() nor does it call GotoState(firstState):
@@ -1703,6 +1716,11 @@ namespace PixelCrushers.DialogueSystem
             conversationLinePrepared?.Invoke(subtitle);
         }
 
+        public void InvokeConversationResponseMenuPrepared(Response[] responses)
+        {
+            conversationResponseMenuPrepared?.Invoke(responses);
+        }
+
         /// <summary>
         /// Chooses the first response after one frame. We wait one frame in case a customer-defined
         /// OnConversationTimeout handler decides to stop the conversation first.
@@ -1826,7 +1844,7 @@ namespace PixelCrushers.DialogueSystem
                 return;
             }
             var barkUI = DialogueActor.GetBarkUI(speaker); // speaker.GetComponentInChildren(typeof(IBarkUI)) as IBarkUI;
-            ConversationModel conversationModel = new ConversationModel(DialogueManager.masterDatabase, conversationTitle, speaker, listener, DialogueManager.allowLuaExceptions, DialogueManager.isDialogueEntryValid, entryID, 
+            ConversationModel conversationModel = new ConversationModel(DialogueManager.masterDatabase, conversationTitle, speaker, listener, DialogueManager.allowLuaExceptions, DialogueManager.isDialogueEntryValid, entryID,
                 stopEvaluationAtFirstValid, useLinearGroupMode);
             var state = conversationModel.firstState;
             StartCoroutine(BarkController.Bark(state.subtitle, speaker, listener, barkUI));

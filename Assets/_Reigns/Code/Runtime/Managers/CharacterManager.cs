@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class CharacterManager : MonoBehaviour
     private void Start()
     {
         UnlockStartingCharacters();
+        CheckQuestUnlocks();
     }
     
     public void UnlockCharacter(
@@ -114,6 +116,35 @@ public class CharacterManager : MonoBehaviour
 
             UnlockCharacter(character);
         }
+    }
+    private void CheckQuestUnlocks()
+    {
+        foreach (CharacterData character
+                 in database.Characters)
+        {
+            if (character.UnlockType !=
+                CharacterUnlockType.QuestState)
+            {
+                continue;
+            }
+
+            var state =
+                QuestLog.GetQuestState(
+                    character.RequiredQuest);
+
+            if (state !=
+                character.RequiredQuestState)
+            {
+                continue;
+            }
+
+            UnlockCharacter(character);
+        }
+    }
+    private void OnQuestStateChange(
+        string questName)
+    {
+        CheckQuestUnlocks();
     }
     [Button]
     private void PrintUnlockedCharacters()

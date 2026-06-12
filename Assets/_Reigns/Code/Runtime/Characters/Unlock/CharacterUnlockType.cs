@@ -2,5 +2,6 @@ public enum CharacterUnlockType
 {
     Starting,
     Day,
-    Mission
+    Mission,
+    QuestState
 }

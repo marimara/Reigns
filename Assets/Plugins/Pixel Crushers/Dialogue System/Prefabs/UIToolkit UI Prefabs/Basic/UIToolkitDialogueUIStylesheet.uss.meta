@@ -9,3 +9,10 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 12385, guid: 0000000000000000e000000000000000, type: 0}
   disableValidation: 0
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.71
+  assetPath: Assets/Plugins/Pixel Crushers/Dialogue System/Prefabs/UIToolkit UI Prefabs/Basic/UIToolkitDialogueUIStylesheet.uss
+  uploadId: 931440

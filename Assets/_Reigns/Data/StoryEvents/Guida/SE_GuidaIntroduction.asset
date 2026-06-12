@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4062313c6429b0340bbd3361f32f5bd0, type: 3}
+  m_Name: SE_GuidaIntroduction
+  m_EditorClassIdentifier: Assembly-CSharp::StoryEvent
+  eventID: GuildHall_Bar_GuidaIntroduction
+  Database: {fileID: 11400000, guid: 821713a404f7af54c8c24e1de0bb0444, type: 2}
+  LocationID: 1
+  ConversationTitle: Guida Introduction
+  Priority: 100
+  PlayOnlyOnce: 1

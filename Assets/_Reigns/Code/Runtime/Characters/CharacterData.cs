@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using PixelCrushers.DialogueSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -50,6 +52,19 @@ public class CharacterData : ScriptableObject
     [ShowIf(nameof(ShowMissionUnlock))]
     public MissionData RequiredMission;
     
+    [BoxGroup("Unlock")]
+    [ShowIf(nameof(ShowQuestUnlock))]
+    public DialogueDatabase Database;
+
+    [BoxGroup("Unlock")]
+    [ShowIf(nameof(ShowQuestUnlock))]
+    [ValueDropdown(nameof(GetQuests))]
+    public string RequiredQuest;
+
+    [BoxGroup("Unlock")]
+    [ShowIf(nameof(ShowQuestUnlock))]
+    public PixelCrushers.DialogueSystem.QuestState RequiredQuestState;
+    
     private bool ShowDayUnlock()
     {
         return UnlockType ==
@@ -60,5 +75,23 @@ public class CharacterData : ScriptableObject
     {
         return UnlockType ==
                CharacterUnlockType.Mission;
+    }
+    private bool ShowQuestUnlock()
+    {
+        return UnlockType ==
+               CharacterUnlockType.QuestState;
+    }
+    private IEnumerable<string> GetQuests()
+    {
+        if (Database == null)
+            yield break;
+
+        foreach (var item in Database.items)
+        {
+            if (item.IsItem)
+                continue;
+
+            yield return item.Name;
+        }
     }
 }

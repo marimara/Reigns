@@ -1,4 +1,4 @@
-#if UNITY_2021_1_OR_NEWER
+#if UNITY_2022_1_OR_NEWER
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 using System;
@@ -30,11 +30,20 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
 
         protected UIDocument Document { get; set; }
         public override AbstractUISubtitleControls subtitleReminderControls => null;
-        protected VisualElement ResponseMenuPanel => UIToolkitDialogueUI.GetVisualElement<VisualElement>(Document, responseMenuPanelName);
-        protected ProgressBar TimerProgressBar => UIToolkitDialogueUI.GetVisualElement<ProgressBar>(Document, timerProgressBarName);
-        protected Label PortraitLabel => UIToolkitDialogueUI.GetVisualElement<Label>(Document, portraitLabelName);
-        protected VisualElement PortraitImage => UIToolkitDialogueUI.GetVisualElement<VisualElement>(Document, portraitImageName);
-        protected virtual Button GetResponseButton(int index) => UIToolkitDialogueUI.GetVisualElement<Button>(Document, responseButtonNames[index]);
+        protected VisualElement ResponseMenuPanel => UIToolkitUtility.GetVisualElement<VisualElement>(Document, responseMenuPanelName);
+        protected ProgressBar TimerProgressBar => UIToolkitUtility.GetVisualElement<ProgressBar>(Document, timerProgressBarName);
+        protected VisualElement PortraitImage => UIToolkitUtility.GetVisualElement<VisualElement>(Document, portraitImageName);
+        protected virtual Button GetResponseButton(int index) => UIToolkitUtility.GetVisualElement<Button>(Document, responseButtonNames[index]);
+
+        protected TextElement portraitLabel = null;
+        protected TextElement PortraitLabel
+        {
+            get
+            {
+                if (portraitLabel == null) portraitLabel = new TextElement(Document, portraitLabelName);
+                return portraitLabel;
+            }
+        }
 
         protected float TimerSecondsMax { get; set; }
         protected float TimerSecondsLeft { get;set; }
@@ -46,7 +55,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
         {
             Document = document;
             ClickedResponseAction = clickedResponseAction;
-            UIToolkitDialogueUI.SetDisplay(ResponseMenuPanel, false);
+            UIToolkitUtility.SetDisplay(ResponseMenuPanel, false);
             for (int i = 0; i < responseButtonNames.Count; i++)
             {
                 var index = i;
@@ -61,8 +70,8 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
 
         public override void SetActive(bool value)
         {
-            UIToolkitDialogueUI.SetDisplay(ResponseMenuPanel, value);
-            UIToolkitDialogueUI.SetDisplay(TimerProgressBar, false);
+            UIToolkitUtility.SetDisplay(ResponseMenuPanel, value);
+            UIToolkitUtility.SetDisplay(TimerProgressBar, false);
         }
 
         public override void SetPCPortrait(Sprite sprite, string portraitName)
@@ -71,7 +80,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
             if (PortraitImage != null)
             {
                 var hasSprite = sprite != null;
-                UIToolkitDialogueUI.SetDisplay(PortraitImage, hasSprite);
+                UIToolkitUtility.SetDisplay(PortraitImage, hasSprite);
                 if (hasSprite) PortraitImage.style.backgroundImage = new StyleBackground(sprite);
             }
         }
@@ -81,7 +90,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
             ResponsesByButtonIndex.Clear();
             for (int i = 0; i < responseButtonNames.Count; i++)
             {
-                UIToolkitDialogueUI.SetDisplay(GetResponseButton(i), false);
+                UIToolkitUtility.SetDisplay(GetResponseButton(i), false);
             }
         }
 
@@ -105,6 +114,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
             int numUnusedButtons = responseButtonNames.Count - maxResponses;
 
             // Fill in buttons using specified positions & alignment:
+            var needToFocusAButton = InputDeviceManager.autoFocus;
             for (int i = 0; i < responses.Length; i++)
             {
                 var response = responses[i];
@@ -118,7 +128,14 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
                 var button = GetResponseButton(index);
                 if (button == null) continue;
                 button.text = response.formattedText.text;
-                UIToolkitDialogueUI.SetDisplay(button, true);
+                button.SetEnabled(response.enabled);
+                var focusThisButton = false;
+                if (needToFocusAButton && response.enabled)
+                {
+                    focusThisButton = true;
+                    needToFocusAButton = false;
+                }
+                UIToolkitUtility.SetDisplay(button, true, focusThisButton);
             }
 
             // If specified, show unused buttons with no text:
@@ -130,7 +147,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
                     var button = GetResponseButton(i);
                     if (button == null) continue;
                     button.text = string.Empty;
-                    UIToolkitDialogueUI.SetDisplay(button, true);
+                    UIToolkitUtility.SetDisplay(button, true);
                 }
             }
         }
@@ -147,7 +164,7 @@ namespace PixelCrushers.DialogueSystem.UIToolkit
         public override void StartTimer(float timeout)
         {
             if (TimerProgressBar == null) return;
-            UIToolkitDialogueUI.SetDisplay(TimerProgressBar, true);
+            UIToolkitUtility.SetDisplay(TimerProgressBar, true);
             TimerSecondsLeft = TimerSecondsMax = timeout;
             TimerProgressBar.value = 1;
         }

@@ -5,3 +5,10 @@ PrefabImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.71
+  assetPath: Assets/Plugins/Pixel Crushers/Dialogue System/Prefabs/UIToolkit UI Prefabs/Basic/BasicUIToolkitDialogueUI.prefab
+  uploadId: 931440

@@ -575,6 +575,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66239515}
   m_CullTransparentMesh: 0
+--- !u!1 &66801233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66801234}
+  - component: {fileID: 66801235}
+  m_Layer: 0
+  m_Name: EventManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &66801234
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66801233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 892287720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &66801235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66801233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98e40ec0ad3ab0744b7c8b71e22716e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EventManager
+  storyEvents:
+  - {fileID: 11400000, guid: 95d60cc83d692ce4ba9af74b892ce4ed, type: 2}
+  - {fileID: 11400000, guid: 03961e653426e0b4faa5928140308248, type: 2}
 --- !u!1 &71840162
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +938,7 @@ MonoBehaviour:
   m_key: 
   m_appendSaverTypeToKey: 0
   m_saveAcrossSceneChanges: 1
+  m_skipSaveWhenChangingScenes: 0
   m_restoreStateOnStart: 0
   m_order: 0
   skipApplyDataAfterFramesIfApplyImmediate: 1
@@ -2779,6 +2827,7 @@ GameObject:
   - component: {fileID: 587062621}
   - component: {fileID: 587062623}
   - component: {fileID: 587062622}
+  - component: {fileID: 587062625}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2862,10 +2911,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 824960334}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 587062625}
+        m_TargetAssemblyTypeName: LocationButton, Assembly-CSharp
+        m_MethodName: OpenLocation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2912,6 +2961,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587062619}
   m_CullTransparentMesh: 1
+--- !u!114 &587062625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587062619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8a07a49b9ea994f927dde3ba99dbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationButton
+  screenToOpen: {fileID: 824960334}
+  screenToClose: {fileID: 0}
+  locationID: 1
 --- !u!224 &605717957 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1782480876141827232, guid: d549e6df80eeacf478cb6b60ea72072f, type: 3}
@@ -3418,6 +3482,7 @@ GameObject:
   - component: {fileID: 634531020}
   - component: {fileID: 634531019}
   - component: {fileID: 634531018}
+  - component: {fileID: 634531021}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -3488,10 +3553,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 709229387}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 634531021}
+        m_TargetAssemblyTypeName: LocationButton, Assembly-CSharp
+        m_MethodName: OpenLocation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3538,6 +3603,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 634531016}
   m_CullTransparentMesh: 1
+--- !u!114 &634531021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634531016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8a07a49b9ea994f927dde3ba99dbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationButton
+  screenToOpen: {fileID: 0}
+  screenToClose: {fileID: 709229387}
+  locationID: 0
 --- !u!1 &653891328
 GameObject:
   m_ObjectHideFlags: 0
@@ -4703,6 +4783,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886090122}
   m_CullTransparentMesh: 0
+--- !u!1 &888568183
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 888568185}
+  - component: {fileID: 888568184}
+  m_Layer: 0
+  m_Name: Dialogue System Scene Events
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &888568184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888568183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca55201633b97d3408f439eb84ecb249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::PixelCrushers.DialogueSystem.Wrappers.DialogueSystemSceneEvents
+  dialogueEntrySceneEvents: []
+--- !u!4 &888568185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888568183}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &889373928
 GameObject:
   m_ObjectHideFlags: 0
@@ -4853,6 +4978,8 @@ Transform:
   - {fileID: 2098031350}
   - {fileID: 410305742}
   - {fileID: 2027268618}
+  - {fileID: 66801234}
+  - {fileID: 2035560932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900329456
@@ -4958,6 +5085,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11426068, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: initialDatabase
       value: 
@@ -4972,6 +5103,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11426072, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
       propertyPath: displaySettings.subtitleSettings.showPCSubtitlesDuringLine
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22325660, guid: 58ac37417e60e534f91138088a3e6f70, type: 3}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5134,6 +5269,7 @@ GameObject:
   - component: {fileID: 946511588}
   - component: {fileID: 946511587}
   - component: {fileID: 946511586}
+  - component: {fileID: 946511590}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -5217,9 +5353,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 709229389}
-        m_TargetAssemblyTypeName: MissionBoardUI, Assembly-CSharp
-        m_MethodName: OpenBoard
+      - m_Target: {fileID: 946511590}
+        m_TargetAssemblyTypeName: LocationButton, Assembly-CSharp
+        m_MethodName: OpenLocation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5267,6 +5403,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 946511584}
   m_CullTransparentMesh: 1
+--- !u!114 &946511590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946511584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8a07a49b9ea994f927dde3ba99dbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationButton
+  screenToOpen: {fileID: 709229387}
+  screenToClose: {fileID: 0}
+  locationID: 2
 --- !u!1 &966565917
 GameObject:
   m_ObjectHideFlags: 0
@@ -6070,6 +6221,7 @@ MonoBehaviour:
   key: 106
   buttonName: 
   questLogWindow: {fileID: 0}
+  inputAction: {fileID: 0}
 --- !u!4 &1246875276
 Transform:
   m_ObjectHideFlags: 0
@@ -6558,6 +6710,8 @@ MonoBehaviour:
   quarterPauseCharacters: 
   fullPauseDuration: 1
   quarterPauseDuration: 0.25
+  fadeAudioOnStopTyping: 0
+  fadeAudioDuration: 0.5
   removeDuplicateTypewriterEffects: 1
   playOnEnable: 0
   waitOneFrameBeforeStarting: 0
@@ -6767,6 +6921,7 @@ MonoBehaviour:
   observeGameObject: {fileID: 0}
   condition:
     luaConditions: []
+    luaElementsMustBeTrue: 0
     questConditions:
     - questName: Take a look at the Board
       questState: 2
@@ -9131,6 +9286,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterManager
   database: {fileID: 11400000, guid: 3d5c78d664f686d4884f5c8ab0b921c0, type: 2}
+--- !u!1 &2035560931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035560932}
+  - component: {fileID: 2035560933}
+  m_Layer: 0
+  m_Name: LocationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2035560932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035560931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 892287720}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2035560933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035560931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f45cd2481aef94d90063bbe1162564, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationManager
 --- !u!1 &2061989645
 GameObject:
   m_ObjectHideFlags: 0
@@ -9699,6 +9898,7 @@ GameObject:
   - component: {fileID: 2121771960}
   - component: {fileID: 2121771959}
   - component: {fileID: 2121771958}
+  - component: {fileID: 2121771961}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -9769,10 +9969,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 824960334}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2121771961}
+        m_TargetAssemblyTypeName: LocationButton, Assembly-CSharp
+        m_MethodName: OpenLocation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9819,6 +10019,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121771956}
   m_CullTransparentMesh: 1
+--- !u!114 &2121771961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121771956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8a07a49b9ea994f927dde3ba99dbb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocationButton
+  screenToOpen: {fileID: 0}
+  screenToClose: {fileID: 824960334}
+  locationID: 0
 --- !u!1001 &2689799884317301476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11337,3 +11552,4 @@ SceneRoots:
   - {fileID: 1246875276}
   - {fileID: 905257179}
   - {fileID: 838443958}
+  - {fileID: 888568185}

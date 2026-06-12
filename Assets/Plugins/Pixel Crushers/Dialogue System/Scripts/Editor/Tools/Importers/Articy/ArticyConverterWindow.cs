@@ -85,7 +85,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             DrawConversationsForLooseFlow();
             DrawDefaultActorsToggle();
             DrawConvertMarkupToggle();
-            DrawSplitPipesToggle();
+            DrawExtraOptions();
             DrawDocumentsSubmenu();
             DrawVoiceOverOptions();
             DrawPortraitFolderField();
@@ -266,6 +266,9 @@ namespace PixelCrushers.DialogueSystem.Articy
                     "Instead of using entity's name as Display Name, use a custom field named 'DisplayName'."),
                     prefs.CustomDisplayName);
             }
+            prefs.AddDialogueEntryTechnicalNames = EditorGUILayout.Toggle(new GUIContent("Add Entry Technical Names",
+                "Add Technical Name field to dialogue entries. If unticked, omits Technical Name fields for dialogue entries to keep database smaller."),
+                prefs.AddDialogueEntryTechnicalNames);
             prefs.IncludeFeatureNameInFields = EditorGUILayout.Toggle(new GUIContent("Include Feature Names",
                 "Add containing feature name to property name when importing properties as fields."), prefs.IncludeFeatureNameInFields);
         }
@@ -298,7 +301,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                 prefs.ConvertMarkupToRichText);
         }
 
-        private void DrawSplitPipesToggle()
+        private void DrawExtraOptions()
         {
             prefs.SplitTextOnPipes = EditorGUILayout.Toggle(new GUIContent("Split Text On Pipes",
                 "When dialogue text contains pipe characters ( | ), split into separate dialogue entry nodes."),
@@ -312,6 +315,9 @@ namespace PixelCrushers.DialogueSystem.Articy
             prefs.ReorderIDs = EditorGUILayout.Toggle(new GUIContent("Reorder IDs",
                 "Reorder internal dialogue entry IDs depth-first after importing."), 
                 prefs.ReorderIDs);
+            prefs.AutoArrangeNodes = EditorGUILayout.Toggle(new GUIContent("Auto-arrange Nodes",
+                "Arrange dialogue entries as a vertical conversation tree on canvas."),
+                prefs.AutoArrangeNodes);
             prefs.DelayEvaluation = EditorGUILayout.Toggle(new GUIContent("Delay Evaluation",
                 "If Dialogue Manager's Other Settings > Reevaluate Links After Subtitle ticked, you can generally untick this unless you're using SimStatus. If ticked, it will add <Delay Evaluation> nodes between nodes with Scripts and nodes with Conditions."),
                 prefs.DelayEvaluation);
@@ -804,7 +810,7 @@ namespace PixelCrushers.DialogueSystem.Articy
                         ArticyConverter.ConvertArticyDataToDatabase(articyData, prefs, template, database);
                         ArticyEditorTools.FindPortraitTexturesInAssetDatabase(articyData, prefs.PortraitFolder, database);
                         if (prefs.ReorderIDs) ReorderIDs(database);
-                        AutoArrangeNodes(database);
+                        if (prefs.AutoArrangeNodes) AutoArrangeNodes(database);
                         EditorUtility.SetDirty(database);
                         PrefabUtility.RecordPrefabInstancePropertyModifications(database);
                         ConvertTextTable(assetName);

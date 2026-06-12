@@ -1,5 +1,13 @@
 fileFormatVersion: 2
 guid: 522f0b9508ec7c54aaf42647ef91b918
+AssetOrigin:
+  serializedVersion: 1
+  productId: 11672
+  packageName: Dialogue System for Unity
+  packageVersion: 2.2.71
+  assetPath: Assets/Plugins/Pixel Crushers/Dialogue System/Prefabs/Art/Textures/UnityUI/Button
+    - Trimmed.psd
+  uploadId: 931440
 TextureImporter:
   internalIDToNameTable:
   - first:
