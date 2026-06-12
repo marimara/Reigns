@@ -21,6 +21,9 @@ MonoBehaviour:
   Charisma: 2
   Intellect: 6
   Sanity: 3
-  UnlockType: 0
+  UnlockType: 3
   RequiredDay: 1
   RequiredMission: {fileID: 0}
+  Database: {fileID: 11400000, guid: 821713a404f7af54c8c24e1de0bb0444, type: 2}
+  RequiredQuest: First Member
+  RequiredQuestState: 128

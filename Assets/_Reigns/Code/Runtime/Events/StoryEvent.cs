@@ -89,5 +89,6 @@ public enum LocationID
     GuildHall,
     GuildHall_Bar,
     GuildHall_MissionBoard,
+    Guild_Entrance,
     Dormitory
 }

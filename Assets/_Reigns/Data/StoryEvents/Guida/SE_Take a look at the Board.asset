@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4062313c6429b0340bbd3361f32f5bd0, type: 3}
   m_Name: SE_Take a look at the Board
   m_EditorClassIdentifier: Assembly-CSharp::StoryEvent
-  eventID: 
+  eventID: GuildHall_Bar_TakealookattheBoard
   Database: {fileID: 11400000, guid: 821713a404f7af54c8c24e1de0bb0444, type: 2}
   LocationID: 1
   ConversationTitle: Take a look at the Board
   Priority: 100
   PlayOnlyOnce: 0
+  RequireDay: 0
+  RequiredDay: 1
   RequireQuest: 1
   QuestName: Take a look at the Board
   RequiredQuestState: 2

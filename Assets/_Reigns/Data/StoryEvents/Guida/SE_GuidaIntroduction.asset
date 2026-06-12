@@ -18,3 +18,8 @@ MonoBehaviour:
   ConversationTitle: Guida Introduction
   Priority: 100
   PlayOnlyOnce: 1
+  RequireDay: 0
+  RequiredDay: 1
+  RequireQuest: 0
+  QuestName: 
+  RequiredQuestState: 0
